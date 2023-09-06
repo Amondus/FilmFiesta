@@ -7,7 +7,7 @@
 
 import UIKit
 import SnapKit
-import YouTubeiOSPlayerHelper
+import youtube_ios_player_helper
 
 final class ShortsPlayerView: UIView {
     // MARK: - UI Components

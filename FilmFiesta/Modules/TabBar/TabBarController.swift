@@ -50,7 +50,14 @@ private extension TabBarController {
             image: UIImage(named: "heart_icon"),
             tag: 1
         )
+
+        let controller3 = ProfileFactory().create()
+        controller3.tabBarItem = UITabBarItem(
+            title: "Профиль",
+            image: UIImage(systemName: "person"),
+            tag: 2
+        )
         
-        return [controller1, controller2]
+        return [controller1, controller2, controller3]
     }
 }

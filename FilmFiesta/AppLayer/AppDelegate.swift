@@ -6,10 +6,11 @@
 //
 
 import UIKit
+import RealmSwift
+import GoogleSignIn
 import FirebaseCore
 import FirebaseMessaging
 import FirebaseDynamicLinks
-import AVFAudio
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -17,16 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        let audioSession = AVAudioSession.sharedInstance()
-        do {
-            try audioSession.setCategory(.playback, mode: .moviePlayback)
-        }
-        catch {
-            print("Setting category to AVAudioSessionCategoryPlayback failed.")
-        }
-        
-        
         
         // CONFIGURE PUSH NOTIFICATION
         let authOptions : UNAuthorizationOptions = [.alert, .badge, .sound]
@@ -42,6 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         // CONFIGURE FIREBASE PROJECT
         FirebaseApp.configure()
+
+        let config = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
+        Realm.Configuration.defaultConfiguration = config
         
         return true
     }
@@ -62,6 +56,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         Messaging.messaging().apnsToken = deviceToken
+    }
+    
+    func application(_ app: UIApplication,
+                     open url: URL,
+                     options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+      return GIDSignIn.sharedInstance.handle(url)
     }
 }
 

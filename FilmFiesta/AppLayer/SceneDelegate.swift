@@ -15,7 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         let deeplinkUrl = connectionOptions.userActivities.first?.webpageURL
         
-        showTabBarController(scene: scene, deeplinkUrl: deeplinkUrl)
+        showRootController(scene: scene, deeplinkUrl: deeplinkUrl)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -49,14 +49,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // MARK: - Deeplinking
 
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
-        showTabBarController(scene: scene, deeplinkUrl: userActivity.webpageURL)
+        showRootController(scene: scene, deeplinkUrl: userActivity.webpageURL)
     }
 }
 
 // MARK: - Private Methods
 
 private extension SceneDelegate {
-    func showTabBarController(
+    func showRootController(
         scene: UIScene,
         deeplinkUrl: URL?
     ) {
@@ -71,7 +71,7 @@ private extension SceneDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = TabBarController(deeplinkVideoId: videoId)
+        window?.rootViewController = AuthFactory().create(with: .init(deeplinkVideoId: videoId))
         window?.makeKeyAndVisible()
         window?.overrideUserInterfaceStyle = .dark
     }

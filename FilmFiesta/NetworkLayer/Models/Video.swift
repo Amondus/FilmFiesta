@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class Video: Object {
+class Video: Object, Codable {
     @objc dynamic var videoId: String = ""
     @objc dynamic var movieName: String = ""
     @objc dynamic var rate: String = ""
